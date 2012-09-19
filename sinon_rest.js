@@ -1,10 +1,12 @@
 sinonRest = function(baseUrl, attributes){
+	var id = 0;
 	var server = sinon.fakeServer.create();
 
 	// Create
 	server.respondWith('POST', new RegExp(baseUrl), function(xhr){
-		new_attributes = attributes;
-		new_attributes['id'] = Math.floor(Math.random()*1000);
+		id++;
+		new_attributes = _.clone(attributes);
+		new_attributes['id'] = id;
 		xhr.respond( 201, { "Content-Type": "application/json" }, JSON.stringify(new_attributes));
 	});
 
